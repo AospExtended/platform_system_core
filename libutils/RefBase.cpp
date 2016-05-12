@@ -575,14 +575,15 @@ bool RefBase::weakref_type::attemptIncStrong(const void* id)
             // grab a strong-reference, which is always safe due to the
             // extended life-time.
             curCount = impl->mStrong.fetch_add(1, std::memory_order_relaxed);
-            // If the strong reference count has already been incremented by
-            // someone else, the implementor of onIncStrongAttempted() is holding
-            // an unneeded reference.  So call onLastStrongRef() here to remove it.
-            // (No, this is not pretty.)  Note that we MUST NOT do this if we
-            // are in fact acquiring the first reference.
-            if (curCount != 0 && curCount != INITIAL_STRONG_VALUE) {
-                impl->mBase->onLastStrongRef(id);
-            }
+        }
+
+        // If the strong reference count has already been incremented by
+        // someone else, the implementor of onIncStrongAttempted() is holding
+        // an unneeded reference.  So call onLastStrongRef() here to remove it.
+        // (No, this is not pretty.)  Note that we MUST NOT do this if we
+        // are in fact acquiring the first reference.
+        if (curCount > 0 && curCount < INITIAL_STRONG_VALUE) {
+            impl->mBase->onLastStrongRef(id);
         }
     }
     
