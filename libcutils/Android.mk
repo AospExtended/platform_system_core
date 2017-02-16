@@ -28,7 +28,7 @@ libcutils_common_sources := \
         open_memstream.c \
         process_name.c \
         record_stream.c \
-        sched_policy.c \
+        sched_policy.cpp \
         sockets.cpp \
         strdup16to8.c \
         strdup8to16.c \
@@ -127,12 +127,6 @@ endif
 
 LOCAL_C_INCLUDES := $(libcutils_c_includes)
 LOCAL_STATIC_LIBRARIES := liblog
-ifneq ($(ENABLE_CPUSETS),)
-LOCAL_CFLAGS += -DUSE_CPUSETS
-endif
-ifneq ($(ENABLE_SCHEDBOOST),)
-LOCAL_CFLAGS += -DUSE_SCHEDBOOST
-endif
 LOCAL_CFLAGS += -Werror -Wall -Wextra -std=gnu90
 LOCAL_CLANG := true
 LOCAL_SANITIZE := integer
@@ -144,12 +138,6 @@ LOCAL_MODULE := libcutils
 # liblog symbols present in libcutils.
 LOCAL_WHOLE_STATIC_LIBRARIES := libcutils liblog
 LOCAL_SHARED_LIBRARIES := liblog
-ifneq ($(ENABLE_CPUSETS),)
-LOCAL_CFLAGS += -DUSE_CPUSETS
-endif
-ifneq ($(ENABLE_SCHEDBOOST),)
-LOCAL_CFLAGS += -DUSE_SCHEDBOOST
-endif
 LOCAL_CFLAGS += -Werror -Wall -Wextra
 LOCAL_C_INCLUDES := $(libcutils_c_includes)
 LOCAL_CLANG := true
