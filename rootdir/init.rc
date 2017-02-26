@@ -446,8 +446,6 @@ on post-fs-data
 
     mkdir /data/anr 0775 system system
 
-    mkdir_parallel /data/misc,01771,system,misc /data/local,0751,root,root /data/data,0771,system,system /data/app-private,0771,system,system /data/app-ephemeral,0771,system,system /data/app-asec,0700,root,root /data/app-lib,0771,system,system /data/app,0771,system,system /data/property,0700,root,root /data/tombstones,0771,system,system /data/dalvik-cache,0771,root,root /data/ota,0771,root,root /data/ota_package,0770,system,cache /data/resource-cache,0771,system,system /data/lost+found,0770,root,root /data/drm,0770,drm,drm /data/mediadrm,0770,mediadrm,mediadrm /data/anr,0775,system,system /data/security,0711,system,system /data/backup,0700,system,system /data/ss,0700,system,system /data/system,0775,system,system /data/system_de,0770,system,system /data/system_ce,0770,system,system /data/misc_de,01771,system,misc /data/misc_ce,01771,system,misc /data/user,0711,system,system /data/user_de,0711,system,system /data/media,0770,media_rw,media_rw /data/cache,0770,system,cache /data/system/theme,0755,system,system
-
     # Separate location for storing security policy files on data
     mkdir /data/security 0711 system system
 
