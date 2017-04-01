@@ -4,7 +4,12 @@ LOCAL_PATH:= $(call my-dir)
 
 # --
 
+ifneq (,$(filter userdebug eng,$(TARGET_BUILD_VARIANT)))
 init_options += -DALLOW_LOCAL_PROP_OVERRIDE=1 -DALLOW_PERMISSIVE_SELINUX=1
+else
+init_options += -DALLOW_LOCAL_PROP_OVERRIDE=0 -DALLOW_PERMISSIVE_SELINUX=0
+endif
+
 init_options += -DLOG_UEVENTS=0
 
 ifneq ($(TARGET_INIT_COLDBOOT_TIMEOUT),)
