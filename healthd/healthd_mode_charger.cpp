@@ -520,6 +520,7 @@ static void draw_battery(const struct charger* charger)
     }
     draw_clock(anim);
     draw_percent(anim);
+    healthd_board_mode_charger_draw_battery(batt_prop);
 }
 
 static void redraw_screen(struct charger *charger)
