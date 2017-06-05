@@ -53,22 +53,18 @@ on init
     mount cgroup none /dev/stune schedtune
     mkdir /dev/stune/foreground
     mkdir /dev/stune/background
-    mkdir /dev/stune/system-background
     mkdir /dev/stune/top-app
     chown system system /dev/stune
     chown system system /dev/stune/foreground
     chown system system /dev/stune/background
-    chown system system /dev/stune/system-background
     chown system system /dev/stune/top-app
     chown system system /dev/stune/tasks
     chown system system /dev/stune/foreground/tasks
     chown system system /dev/stune/background/tasks
-    chown system system /dev/stune/system-background/tasks
     chown system system /dev/stune/top-app/tasks
     chmod 0664 /dev/stune/tasks
     chmod 0664 /dev/stune/foreground/tasks
     chmod 0664 /dev/stune/background/tasks
-    chmod 0664 /dev/stune/system-background/tasks
     chmod 0664 /dev/stune/top-app/tasks
 
     # Mount staging areas for devices managed by vold
@@ -158,26 +154,25 @@ on init
     # this ensures that the cpusets are present and usable, but the device's
     # init.rc must actually set the correct cpus
     mkdir /dev/cpuset/foreground
+    write /dev/cpuset/foreground/cpus 0
     write /dev/cpuset/foreground/mems 0
     mkdir /dev/cpuset/foreground/boost
+    write /dev/cpuset/foreground/boost/cpus 0
     write /dev/cpuset/foreground/boost/mems 0
     mkdir /dev/cpuset/background
+    write /dev/cpuset/background/cpus 0
     write /dev/cpuset/background/mems 0
 
     # system-background is for system tasks that should only run on
     # little cores, not on bigs
     # to be used only by init, so don't change system-bg permissions
     mkdir /dev/cpuset/system-background
+    write /dev/cpuset/system-background/cpus 0
     write /dev/cpuset/system-background/mems 0
 
     mkdir /dev/cpuset/top-app
+    write /dev/cpuset/top-app/cpus 0
     write /dev/cpuset/top-app/mems 0
-
-    copy /sys/devices/system/cpu/possible /dev/cpuset/foreground/cpus
-    copy /sys/devices/system/cpu/possible /dev/cpuset/top-app/cpus
-    copy /sys/devices/system/cpu/possible /dev/cpuset/background/cpus
-    copy /sys/devices/system/cpu/possible /dev/cpuset/system-background/cpus
-    write /dev/cpuset/foreground/boost/cpus 0
 
     # change permissions for all cpusets we'll touch at runtime
     chown system system /dev/cpuset
@@ -232,7 +227,7 @@ on init
     # expecting it to point to /proc/self/fd
     symlink /proc/self/fd /dev/fd
 
-    export DOWNLOAD_CACHE ${ro.device.cache_dir}
+    export DOWNLOAD_CACHE /data/cache
 
     # set RLIMIT_NICE to allow priorities from 19 to -20
     setrlimit 13 40 40
@@ -291,6 +286,7 @@ on late-init
 
     trigger early-boot
     trigger boot
+
 
 on post-fs
     start logd
@@ -473,9 +469,6 @@ on post-fs-data
     mkdir /data/cache/backup 0700 system system
 
     init_user0
-
-    start zygote
-    start zygote_secondary
 
     # Reload policy from /data/security if present.
     setprop selinux.reload_policy 1
