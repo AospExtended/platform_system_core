@@ -148,10 +148,8 @@ bool schedboost_enabled() {
 
 static void __initialize() {
     const char* filename;
-
     if (cpusets_enabled()) {
         if (!access("/dev/cpuset/tasks", W_OK)) {
-
             filename = "/dev/cpuset/foreground/tasks";
             fg_cpuset_fd = open(filename, O_WRONLY | O_CLOEXEC);
             filename = "/dev/cpuset/background/tasks";
