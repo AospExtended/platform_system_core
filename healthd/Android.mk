@@ -132,9 +132,11 @@ ifeq ($(BOARD_USES_QCOM_HARDWARE),true)
 BOARD_HAL_STATIC_LIBRARIES ?= libhealthd.qcom
 endif
 
+ifneq ($(TARGET_CREATE_CHARGER_SYMLINK),false)
 # Symlink /charger to /sbin/healthd
 LOCAL_POST_INSTALL_CMD := $(hide) mkdir -p $(TARGET_ROOT_OUT) \
     && rm -f $(TARGET_ROOT_OUT)/charger && ln -sf /sbin/healthd $(TARGET_ROOT_OUT)/charger
+endif
 
 include $(BUILD_EXECUTABLE)
 
