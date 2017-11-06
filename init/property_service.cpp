@@ -773,6 +773,42 @@ static void load_override_properties() {
     }
 }
 
+static const char *snet_prop_key[] = {
+	"ro.boot.selinux",
+	"ro.boot.warranty_bit",
+	"ro.warranty_bit",
+	"ro.debuggable",
+	"ro.secure",
+	"ro.build.type",
+	"ro.build.keys",
+	"ro.build.tags",
+	"ro.system.build.tags",
+	NULL
+};
+
+static const char *snet_prop_value[] = {
+	"enforcing", // ro.boot.selinux
+	"0", // ro.boot.warranty_bit
+	"0", // ro.warranty_bit
+	"0", // ro.debuggable
+	"1", // ro.secure
+	"user", // ro.build.type
+	"release-keys", // ro.build.keys
+	"release-keys", // ro.build.tags
+	"release-keys", // ro.system.build.tags
+	NULL
+};
+
+static void workaround_snet_properties() {
+	std::string error;
+	LOG(INFO) << "snet: Hiding sensitive props";
+
+	// Hide all sensitive props
+	for (int i = 0; snet_prop_key[i]; ++i) {
+		PropertySet(snet_prop_key[i], snet_prop_value[i], &error);
+	}
+}
+
 // If the ro.product.[brand|device|manufacturer|model|name] properties have not been explicitly
 // set, derive them from ro.product.${partition}.* properties
 static void property_initialize_ro_product_props() {
@@ -923,6 +959,9 @@ void PropertyLoadBootDefaults() {
 
     property_initialize_ro_product_props();
     property_derive_build_fingerprint();
+
+    // Workaround SafetyNet
+    workaround_snet_properties();
 
     // Restore the normal property override security after init extension is executed
     weaken_prop_override_security = false;
