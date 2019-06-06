@@ -66,6 +66,7 @@ static struct flag_list mount_flags[] = {
     { "nodiratime", MS_NODIRATIME },
     { "ro",         MS_RDONLY },
     { "rw",         0 },
+    { "sync",       MS_SYNCHRONOUS },
     { "remount",    MS_REMOUNT },
     { "bind",       MS_BIND },
     { "rec",        MS_REC },
