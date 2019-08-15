@@ -618,7 +618,8 @@ on boot
     # to avoid power consumption when system becomes mostly idle. Be careful
     # to make it too large, since it may bring userdata loss, if they
     # are not aware of using fsync()/sync() to prepare sudden power-cut.
-    write /sys/fs/f2fs/${dev.mnt.blk.data}/cp_interval 200
+    write /sys/fs/f2fs/${dev.mnt.blk.data}/cp_interval 3000
+    write /sys/fs/f2fs_dev/${dev.mnt.blk.data}/cp_interval 3000
 
     # Permissions for System Server and daemons.
     chown radio system /sys/android_power/state
