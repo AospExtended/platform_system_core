@@ -80,7 +80,6 @@ char* locale;
 #define MAX_BATT_LEVEL_WAIT_TIME (3 * MSEC_PER_SEC)
 
 #define LAST_KMSG_MAX_SZ (32 * 1024)
-#define BACKLIGHT_TOGGLE_PATH "/sys/class/backlight/panel0-backlight/brightness"
 
 #define LOGE(x...) KLOG_ERROR("charger", x);
 #define LOGW(x...) KLOG_WARNING("charger", x);
@@ -200,6 +199,7 @@ static healthd_config* healthd_config;
 static android::BatteryProperties* batt_prop;
 static std::unique_ptr<HealthdDraw> healthd_draw;
 
+#ifdef BACKLIGHT_TOGGLE_PATH
 /* On certain targets the FBIOBLANK ioctl does not turn off the
  * backlight. In those cases we need to manually toggle it on/off
  */
@@ -226,6 +226,7 @@ static int set_backlight(int toggle)
     close(fd);
     return 0;
 }
+#endif
 
 /* current time in milliseconds */
 static int64_t curr_time_ms() {
@@ -349,7 +350,9 @@ static void update_screen_state(charger* charger, int64_t now) {
         healthd_draw.reset(new HealthdDraw(batt_anim));
 
 #ifndef CHARGER_DISABLE_INIT_BLANK
+#ifdef BACKLIGHT_TOGGLE_PATH
         set_backlight(false);
+#endif
         healthd_draw->blank_screen(true);
         charger->screen_blanked = true;
 #endif
@@ -359,7 +362,9 @@ static void update_screen_state(charger* charger, int64_t now) {
     if (batt_anim->num_cycles > 0 && batt_anim->cur_cycle == batt_anim->num_cycles) {
         reset_animation(batt_anim);
         charger->next_screen_transition = -1;
+#ifdef BACKLIGHT_TOGGLE_PATH
         set_backlight(false);
+#endif
         healthd_draw->blank_screen(true);
         charger->screen_blanked = true;
         LOGV("[%" PRId64 "] animation done\n", now);
@@ -370,7 +375,9 @@ static void update_screen_state(charger* charger, int64_t now) {
     disp_time = batt_anim->frames[batt_anim->cur_frame].disp_time;
 
     if (charger->screen_blanked) {
+#ifdef BACKLIGHT_TOGGLE_PATH
         set_backlight(true);
+#endif
         healthd_draw->blank_screen(false);
         charger->screen_blanked = false;
     }
