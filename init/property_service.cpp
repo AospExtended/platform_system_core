@@ -790,6 +790,7 @@ static const char *snet_prop_key[] = {
 	"ro.system.build.tags",
 	"ro.vendor.boot.warranty_bit",
 	"ro.vendor.warranty_bit",
+	"ro.build.selinux",
 	NULL
 };
 
@@ -810,6 +811,7 @@ static const char *snet_prop_value[] = {
 	"release-keys", // ro.system.build.tags
 	"0", // ro.vendor.boot.warranty_bit
 	"0", // ro.vendor.warranty_bit
+	"0", // ro.build.selinux
 	NULL
 };
 
