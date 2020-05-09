@@ -42,7 +42,7 @@
 
 #define POWER_SUPPLY_SUBSYSTEM "power_supply"
 #define POWER_SUPPLY_SYSFS_PATH "/sys/class/" POWER_SUPPLY_SUBSYSTEM
-#ifdef HEALTHD_USE_BATTERY_INFO
+#ifdef BATTERY_REAL_INFO
 #define SYSFS_BATTERY_CURRENT "/sys/class/power_supply/battery/current_now"
 #define SYSFS_BATTERY_VOLTAGE "/sys/class/power_supply/battery/voltage_now"
 #endif
@@ -307,7 +307,7 @@ bool BatteryMonitor::update(void) {
                              mChargerNames[i].string());
             }
 
-#ifdef HEALTHD_USE_BATTERY_INFO
+#ifdef BATTERY_REAL_INFO
 
             int ChargingCurrent =
                   (access(SYSFS_BATTERY_CURRENT, R_OK) == 0) ? abs(getIntField(String8(SYSFS_BATTERY_CURRENT))) : 0;
