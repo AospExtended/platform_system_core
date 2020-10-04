@@ -38,7 +38,7 @@ phony {
         "sh.recovery",
         "toolbox.recovery",
         "toybox.recovery",
-        "unzip.recovery",
+        "ziptool.recovery",
     ],
 }
 
