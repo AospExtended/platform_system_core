@@ -137,9 +137,6 @@ static int RemoveProcessGroup(const char* cgroup, uid_t uid, int pid) {
     auto uid_pid_path = ConvertUidPidToPath(cgroup, uid, pid);
     ret = rmdir(uid_pid_path.c_str());
 
-    auto uid_path = ConvertUidToPath(cgroup, uid);
-    rmdir(uid_path.c_str());
-
     return ret;
 }
 
