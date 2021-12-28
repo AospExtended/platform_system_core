@@ -798,9 +798,14 @@ static void load_override_properties() {
 }
 
 static const char *snet_prop_key[] = {
+    "ro.boot.vbmeta.device_state",
+    "ro.boot.verifiedbootstate",
+    "ro.boot.flash.locked",
     "ro.boot.selinux",
+    "ro.boot.veritymode",
     "ro.boot.warranty_bit",
     "ro.warranty_bit",
+    "ro.debuggable",
     "ro.secure",
     "ro.build.type",
     "ro.system.build.type",
@@ -813,13 +818,20 @@ static const char *snet_prop_key[] = {
     "ro.system.build.tags",
     "ro.vendor.boot.warranty_bit",
     "ro.vendor.warranty_bit",
+    "vendor.boot.vbmeta.device_state",
+    "vendor.boot.verifiedbootstate",
     NULL
 };
 
 static const char *snet_prop_value[] = {
+    "locked", // ro.boot.vbmeta.device_state
+    "green", // ro.boot.verifiedbootstate
+    "1", // ro.boot.flash.locked
     "enforcing", // ro.boot.selinux
+    "enforcing", // ro.boot.veritymode
     "0", // ro.boot.warranty_bit
     "0", // ro.warranty_bit
+    "0", // ro.debuggable
     "1", // ro.secure
     "user", // ro.build.type
     "user", // ro.system.build.type
@@ -832,6 +844,8 @@ static const char *snet_prop_value[] = {
     "release-keys", // ro.system.build.tags
     "0", // ro.vendor.boot.warranty_bit
     "0", // ro.vendor.warranty_bit
+    "locked", // vendor.boot.vbmeta.device_state
+    "green", // vendor.boot.verifiedbootstate
     NULL
 };
 
