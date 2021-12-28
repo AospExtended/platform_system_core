@@ -774,43 +774,55 @@ static void load_override_properties() {
 }
 
 static const char *snet_prop_key[] = {
-	"ro.boot.selinux",
-	"ro.boot.warranty_bit",
-	"ro.warranty_bit",
-	"ro.secure",
-	"ro.build.type",
-	"ro.system.build.type",
-	"ro.system_ext.build.type",
-	"ro.vendor.build.type",
-	"ro.product.build.type",
-	"ro.odm.build.type",
-	"ro.build.keys",
-	"ro.build.tags",
-	"ro.system.build.tags",
-	"ro.vendor.boot.warranty_bit",
-	"ro.vendor.warranty_bit",
-	"ro.build.selinux",
-	NULL
+    "ro.boot.vbmeta.device_state",
+    "ro.boot.verifiedbootstate",
+    "ro.boot.flash.locked",
+    "ro.boot.selinux",
+    "ro.boot.veritymode",
+    "ro.boot.warranty_bit",
+    "ro.warranty_bit",
+    "ro.debuggable",
+    "ro.secure",
+    "ro.build.type",
+    "ro.system.build.type",
+    "ro.system_ext.build.type",
+    "ro.vendor.build.type",
+    "ro.product.build.type",
+    "ro.odm.build.type",
+    "ro.build.keys",
+    "ro.build.tags",
+    "ro.system.build.tags",
+    "ro.vendor.boot.warranty_bit",
+    "ro.vendor.warranty_bit",
+    "vendor.boot.vbmeta.device_state",
+    "vendor.boot.verifiedbootstate",
+    NULL
 };
 
 static const char *snet_prop_value[] = {
-	"enforcing", // ro.boot.selinux
-	"0", // ro.boot.warranty_bit
-	"0", // ro.warranty_bit
-	"1", // ro.secure
-	"user", // ro.build.type
-	"user", // ro.system.build.type
-	"user", // ro.system_ext.build.type
-	"user", // ro.vendor.build.type
-	"user", // ro.product.build.type
-	"user", // ro.odm.build.type
-	"release-keys", // ro.build.keys
-	"release-keys", // ro.build.tags
-	"release-keys", // ro.system.build.tags
-	"0", // ro.vendor.boot.warranty_bit
-	"0", // ro.vendor.warranty_bit
-	"0", // ro.build.selinux
-	NULL
+    "locked", // ro.boot.vbmeta.device_state
+    "green", // ro.boot.verifiedbootstate
+    "1", // ro.boot.flash.locked
+    "enforcing", // ro.boot.selinux
+    "enforcing", // ro.boot.veritymode
+    "0", // ro.boot.warranty_bit
+    "0", // ro.warranty_bit
+    "0", // ro.debuggable
+    "1", // ro.secure
+    "user", // ro.build.type
+    "user", // ro.system.build.type
+    "user", // ro.system_ext.build.type
+    "user", // ro.vendor.build.type
+    "user", // ro.product.build.type
+    "user", // ro.odm.build.type
+    "release-keys", // ro.build.keys
+    "release-keys", // ro.build.tags
+    "release-keys", // ro.system.build.tags
+    "0", // ro.vendor.boot.warranty_bit
+    "0", // ro.vendor.warranty_bit
+    "locked", // vendor.boot.vbmeta.device_state
+    "green", // vendor.boot.verifiedbootstate
+    NULL
 };
 
 static void workaround_snet_properties() {
